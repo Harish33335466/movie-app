@@ -5,8 +5,7 @@ import { APIKey } from "../../api/MovieapiKey";
 const initialState = {
   movies: {},
   user: null,
-  loading:false,
-  watchlist:[]
+  watchlist: [],
 };
 
 export const fetchAsyncMovies = createAsyncThunk(
@@ -29,15 +28,12 @@ export const MovieSlice = createSlice({
     logout: (state, action) => {
       state.user = null;
     },
-    cleanup:(state,action)=>{
-      state.movies={}
+    cleanup: (state, action) => {
+      state.movies = {};
     },
-    loader:(state,action)=>{
-      state.loading=true;
+    watchlist: (state, action) => {
+      state.watchlist.push(action.payload);
     },
-    watchlist:(state,action)=>{
-      state.watchlist.push(action.payload)
-    }
   },
   extraReducers: {
     [fetchAsyncMovies.pending]: () => {
@@ -53,10 +49,9 @@ export const MovieSlice = createSlice({
   },
 });
 
-export const{ login, logout,cleanup,loader,watchlist } = MovieSlice.actions;
+export const { login, logout, cleanup,  watchlist } = MovieSlice.actions;
 export const getallmovies = (state) => state.movies.movies;
-export const watchlistmovies=(state)=>state.movies.watchlist;
+export const watchlistmovies = (state) => state.movies.watchlist;
 export const selectUser = (state) => state.movies.user;
-export const loading=(state)=>state.movies.loading;
 
 export default MovieSlice.reducer;

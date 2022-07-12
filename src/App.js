@@ -5,22 +5,13 @@ import HomeScreen from "./Pages/HomeScreen";
 import ProfileScreen from "./Pages/ProfileScreen";
 import LoginScreen from "./Pages/LoginScreen/LoginScreen";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  login,
-  logout,
-  selectUser,
-  loader,
-  loading,
-} from "./features/movies/MovieSlice";
+import { login, logout, selectUser } from "./features/movies/MovieSlice";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
-import Loading from "./Components/Loading";
 import Watchlist from "./Components/Watchlist/Watchlist";
-
 
 function App() {
   const user = useSelector(selectUser);
-  const loadings = useSelector(loading);
   const dispatch = useDispatch();
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (userAuth) => {
@@ -34,7 +25,6 @@ function App() {
             token: userAuth.accessToken,
           })
         );
-        dispatch(loader());
       } else {
         dispatch(logout());
       }
@@ -44,8 +34,6 @@ function App() {
   console.log(user);
   return (
     <div className="App">
-      {/* <HomeScreen /> */}
-
       <Router>
         {!user ? (
           <LoginScreen />
@@ -57,7 +45,6 @@ function App() {
           </Routes>
         )}
       </Router>
-      {loadings && <Loading />}
     </div>
   );
 }

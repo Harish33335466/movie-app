@@ -6,7 +6,8 @@ import swal from "sweetalert";
 import "./Row.css";
 
 const Row = ({ title, fetchUrl, isLargeRow = false }) => {
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovie] = useState([]);
+  // let movies = useSelector(getmoviesforhome);
   let uniquemovie = useSelector(watchlistmovies);
 
   const dispatch = useDispatch();
@@ -15,7 +16,7 @@ const Row = ({ title, fetchUrl, isLargeRow = false }) => {
     if (uniquemovie.find((item) => item.id === id)) {
       swal({
         title: "Already in your watchlist",
-        icon:"warning",
+        icon: "warning",
         buttons: true,
         dangerMode: true,
       });
@@ -23,8 +24,8 @@ const Row = ({ title, fetchUrl, isLargeRow = false }) => {
     }
 
     swal({
-      title:"Added to your watchlist",
-      icon:"success",
+      title: "Added to your watchlist",
+      icon: "success",
       button: "OK",
     });
 
@@ -33,7 +34,7 @@ const Row = ({ title, fetchUrl, isLargeRow = false }) => {
     //how to handle particular added movie
 
     console.log(id);
-    console.log(movie);
+    // console.log(movie);
   }
 
   const base_url = "https://image.tmdb.org/t/p/original/";
@@ -41,15 +42,14 @@ const Row = ({ title, fetchUrl, isLargeRow = false }) => {
   useEffect(() => {
     const fetchData = async () => {
       const request = await axios.get(fetchUrl);
-      setMovies(request.data.results);
+      setMovie(request.data.results);
 
       return request;
     };
     fetchData();
-  }, [fetchUrl]);
-
+  }, [fetchUrl, dispatch]);
   console.log(movies);
-
+  // console.log(movie);
   return (
     <div
       className="row"
