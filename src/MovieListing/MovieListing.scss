@@ -1,0 +1,8 @@
+.movie-container{
+  display:grid;
+  grid-template-columns: repeat(3, 450px);
+  overflow-x: hidden;
+  margin-left: 0px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
