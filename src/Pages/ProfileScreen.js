@@ -9,7 +9,7 @@ import { signOut } from "firebase/auth";
 const ProfileScreen = () => {
   const user = useSelector(selectUser);
 
-  const logout = () => {
+  const userlogout = () => {
     signOut(auth);
   };
 
@@ -25,7 +25,7 @@ const ProfileScreen = () => {
           />
           <div className="profileScreen__details">
             <h2>{user.email}</h2>
-            <button className="profileScreen__signOut" onClick={logout}>
+            <button className="profileScreen__signOut" onClick={userlogout}>
               Sign Out
             </button>
           </div>

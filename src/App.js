@@ -5,10 +5,11 @@ import HomeScreen from "./Pages/HomeScreen";
 import ProfileScreen from "./Pages/ProfileScreen";
 import LoginScreen from "./Pages/LoginScreen/LoginScreen";
 import { useSelector, useDispatch } from "react-redux";
-import { login, logout, selectUser } from "./features/movies/MovieSlice";
+import { login, logout, selectUser,showloading } from "./features/movies/MovieSlice";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import Watchlist from "./Components/Watchlist/Watchlist";
+import swal from "sweetalert";
 
 function App() {
   const user = useSelector(selectUser);
@@ -17,7 +18,13 @@ function App() {
     const unsubscribe = onAuthStateChanged(auth, (userAuth) => {
       console.log(auth);
       if (userAuth) {
+        dispatch(showloading(false));
         console.log(userAuth);
+        swal({
+          title: "Signin Successful",
+          icon: "success",
+          button: "OK",
+        });
         dispatch(
           login({
             uid: userAuth.uid,

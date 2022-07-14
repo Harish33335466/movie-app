@@ -5,13 +5,18 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../../firebase";
-import swal from "sweetalert";
+import Loader from "../../Components/Loader/Loader";
+import { useSelector, useDispatch } from "react-redux";
+import { showloading, isLoading } from "../../features/movies/MovieSlice";
 const SignupScreen = () => {
+  const loading = useSelector(isLoading);
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const register = (e) => {
     e.preventDefault();
+
+    dispatch(showloading(true));
     createUserWithEmailAndPassword(auth, email, password)
       .then((res) => {
         console.log(res);
@@ -22,13 +27,8 @@ const SignupScreen = () => {
   };
   const signin = (e) => {
     e.preventDefault();
-    setTimeout(() => {
-      swal({
-        title: "Signin Successful",
-        icon: "success",
-        button: "OK",
-      });
-    }, 500);
+
+    dispatch(showloading(true));
 
     signInWithEmailAndPassword(auth, email, password)
       .then((res) => {
@@ -41,6 +41,7 @@ const SignupScreen = () => {
 
   return (
     <div className="signupScreen" style={{ marginTop: "100px" }}>
+      {loading && <Loader />}
       <form>
         <h1 style={{ color: "white" }}>Sign In</h1>
         <input
